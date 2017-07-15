@@ -1,4 +1,5 @@
 import copy
+import json
 from sets import Set
 from .exceptions import TwoPhaseSetException
 
@@ -36,3 +37,10 @@ class TwoPhaseSet(object):
 
     def to_list(self):
         return list(self.a - self.r)
+
+    def __repr__(self):
+        return json.dumps({
+            'type': '2p-set',
+            'a': list(self.a),
+            'r': list(self.r)
+        })
