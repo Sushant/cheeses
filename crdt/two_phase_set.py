@@ -1,6 +1,5 @@
 import copy
 import json
-from sets import Set
 from .exceptions import TwoPhaseSetException
 
 class TwoPhaseSet(object):
@@ -11,8 +10,8 @@ class TwoPhaseSet(object):
     """
 
     def __init__(self):
-        self.a = Set()
-        self.r = Set()
+        self.a = set()
+        self.r = set()
 
     def add(self, element):
         self.a.add(element)
@@ -29,8 +28,8 @@ class TwoPhaseSet(object):
     def merge(self, other):
         if not isinstance(other, self.__class__):
             raise TwoPhaseSetException('Attempted to merge with different type.')
-        self.a.union_update(other.a)
-        self.r.union_update(other.r)
+        self.a.update(other.a)
+        self.r.update(other.r)
 
     def clone(self):
         return copy.deepcopy(self)
