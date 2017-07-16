@@ -38,6 +38,9 @@ class TwoPhaseSet(object):
         return list(self.a - self.r)
 
     def __repr__(self):
+        return self.to_json()
+
+    def to_json(self):
         return json.dumps({
             'type': '2p-set',
             'a': list(self.a),
