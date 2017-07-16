@@ -1,13 +1,25 @@
-import copy
-import json
 import time
+from base_set import BaseSet
 from collections import defaultdict
 from .exceptions import LWWSetException
 
-class LWWSet(object):
+class LWWSet(BaseSet):
     def __init__(self, bias='a'):
         self.e = defaultdict(lambda : defaultdict(float))
         self.bias = bias
+
+    @classmethod
+    def from_dict(cls, set_dict):
+        obj = cls()
+        if 'bias' in set_dict:
+            obj.bias = set_dict['bias']
+        if 'e' in set_dict:
+            try:
+                for item in set_dict['e']:
+                    obj.e[item[0]] = {'a': item[1], 'r': item[2]}
+            except IndexError:
+                raise LWWSetException('Failed to parse dict.')
+        return obj
 
     @classmethod
     def biases(cls):
@@ -32,9 +44,6 @@ class LWWSet(object):
             return self.e[element]['a'] > self.e[element]['r']
         return self.e[element]['a'] >= self.e[element]['r']
 
-    def clone(self):
-        return copy.deepcopy(self)
-
     def merge(self, other):
         if not isinstance(other, self.__class__):
             raise LWWSetException('Attempted to merge with different type.')
@@ -45,12 +54,9 @@ class LWWSet(object):
                 self.e[k]['a'] = max(self.e[k]['a'], other.e[k]['a'])
                 self.e[k]['r'] = max(self.e[k]['r'], other.e[k]['r'])
 
-    def __repr__(self):
-        return self.to_json()
-
-    def to_json(self):
-        return json.dumps({
+    def to_dict(self):
+        return {
             'type': 'lww-set',
             'bias': self.bias,
             'e': [[k, v['a'], v['r']] for k, v in self.e.iteritems()]
-        })
+        }

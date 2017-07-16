@@ -1,8 +1,7 @@
-import copy
-import json
+from base_set import BaseSet
 from .exceptions import TwoPhaseSetException
 
-class TwoPhaseSet(object):
+class TwoPhaseSet(BaseSet):
     """
      Set where an element may be added and removed, but never added again thereafter.
      Adding or removing the same element twice has no effect, nor does adding an element
@@ -12,6 +11,16 @@ class TwoPhaseSet(object):
     def __init__(self):
         self.a = set()
         self.r = set()
+
+    @classmethod
+    def from_dict(cls, set_dict):
+        obj = cls()
+        if set_dict:
+            if 'a' in set_dict:
+                obj.a = set(set_dict['a'])
+            if 'r' in set_dict:
+                obj.r = set(set_dict['r'])
+        return obj
 
     def add(self, element):
         self.a.add(element)
@@ -31,18 +40,12 @@ class TwoPhaseSet(object):
         self.a.update(other.a)
         self.r.update(other.r)
 
-    def clone(self):
-        return copy.deepcopy(self)
-
     def to_list(self):
         return list(self.a - self.r)
 
-    def __repr__(self):
-        return self.to_json()
-
-    def to_json(self):
-        return json.dumps({
+    def to_dict(self):
+        return {
             'type': '2p-set',
             'a': list(self.a),
             'r': list(self.r)
-        })
+        }
