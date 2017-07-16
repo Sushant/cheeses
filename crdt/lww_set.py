@@ -4,6 +4,14 @@ from collections import defaultdict
 from .exceptions import LWWSetException
 
 class LWWSet(BaseSet):
+    """
+     Set where an element may be added and removed any number of times.
+     A default timestamp is added for every add and remove operation.
+     An element is present iff it is in add set, and no newer element exists
+     in remove set.
+     Bias value is used for resolving non-unique timestamped operations.
+    """
+
     def __init__(self, bias='a'):
         self.e = defaultdict(lambda : defaultdict(float))
         self.bias = bias
