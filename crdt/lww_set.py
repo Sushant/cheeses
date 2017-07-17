@@ -64,7 +64,10 @@ class LWWSet(BaseSet):
 
     def to_dict(self):
         return {
-            'type': 'lww-set',
+            'type': self.crdt_type(),
             'bias': self.bias,
             'e': [[k, v['a'], v['r']] for k, v in self.e.iteritems()]
         }
+
+    def crdt_type(self):
+        return 'lww-set'

@@ -45,7 +45,10 @@ class TwoPhaseSet(BaseSet):
 
     def to_dict(self):
         return {
-            'type': '2p-set',
+            'type': self.crdt_type(),
             'a': list(self.a),
             'r': list(self.r)
         }
+
+    def crdt_type(self):
+        return '2p-set'

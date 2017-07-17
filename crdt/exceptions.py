@@ -6,3 +6,6 @@ class TwoPhaseSetException(CheesesException):
 
 class LWWSetException(CheesesException):
     pass
+
+class ORSetException(CheesesException):
+    pass
