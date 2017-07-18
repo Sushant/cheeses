@@ -14,6 +14,17 @@ class ORSet(BaseSet):
     def __init__(self):
         self.e = defaultdict(lambda : defaultdict(set))
 
+    @classmethod
+    def from_dict(cls, set_dict):
+        obj = cls()
+        if 'e' in set_dict:
+            try:
+                for item in set_dict['e']:
+                    obj.e[item[0]] = {'a': set(item[1]), 'r': set(item[2])}
+            except IndexError:
+                raise ORSetException('Failed to parse dict.')
+        return obj
+
     def add(self, element):
         self.e[element]['a'].add(self._generate_tag())
 
