@@ -61,16 +61,6 @@ class TwoPhaseSetTest(unittest.TestCase):
         self.tp_set.add('bar')
         self.assertEqual(['bar'], self.tp_set.to_list())
         self.assertEqual([], other.to_list())
-
-    def test_clone_returns_new_set(self):
-        self.tp_set.add('foo')
-        clone = self.tp_set.clone()
-        self.assertEqual(['foo'], clone.to_list())
-
-        clone.add('bar')
-        self.assertEqual(['foo', 'bar'], clone.to_list())
-        self.assertEqual(['foo'], self.tp_set.to_list())
-
         
 if __name__ == '__main__':
     unittest.main()

@@ -9,3 +9,6 @@ class LWWSetException(CheesesException):
 
 class ORSetException(CheesesException):
     pass
+
+class GCounterException(CheesesException):
+    pass
