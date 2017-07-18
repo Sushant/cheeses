@@ -1,9 +1,9 @@
 import time
-from base_set import BaseSet
+from big_cheese import BigCheese
 from collections import defaultdict
 from .exceptions import LWWSetException
 
-class LWWSet(BaseSet):
+class LWWSet(BigCheese):
     """
      Set where an element may be added and removed any number of times.
      A default timestamp is added for every add and remove operation.

@@ -1,9 +1,8 @@
-import uuid
-from base_set import BaseSet
+from big_cheese import BigCheese
 from collections import defaultdict
 from .exceptions import ORSetException
 
-class ORSet(BaseSet):
+class ORSet(BigCheese):
     """
     Set where an element may be added and removed any number of times.
     A unique tag is added for every add operation. On remove, all the tags
@@ -26,7 +25,7 @@ class ORSet(BaseSet):
         return obj
 
     def add(self, element):
-        self.e[element]['a'].add(self._generate_tag())
+        self.e[element]['a'].add(BigCheese.tag())
 
     def remove(self, element):
         if element in self.e:
@@ -58,6 +57,3 @@ class ORSet(BaseSet):
 
     def crdt_type(self):
         return 'or-set'
-
-    def _generate_tag(self):
-        return str(uuid.uuid4())

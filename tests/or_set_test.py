@@ -56,15 +56,6 @@ class ORSetTest(unittest.TestCase):
     def test_lookup_non_existing_element(self):
         self.assertFalse(self.ors.lookup('foo'))
 
-    def test_clone_returns_new_set(self):
-        self.ors.add('foo')
-        clone = self.ors.clone()
-        self.assertEqual(['foo'], clone.to_list())
-
-        clone.add('bar')
-        self.assertEqual(['foo', 'bar'], clone.to_list())
-        self.assertEqual(['foo'], self.ors.to_list())
-
     def test_merge_with_different_class(self):
         with self.assertRaises(crdt.ORSetException):
             self.ors.merge('foo')

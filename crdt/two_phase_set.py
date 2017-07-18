@@ -1,7 +1,7 @@
-from base_set import BaseSet
+from big_cheese import BigCheese
 from .exceptions import TwoPhaseSetException
 
-class TwoPhaseSet(BaseSet):
+class TwoPhaseSet(BigCheese):
     """
      Set where an element may be added and removed, but never added again thereafter.
      Adding or removing the same element twice has no effect, nor does adding an element
