@@ -27,7 +27,7 @@ Following examples use a hypothetical set up of 3 replicas which receive request
 # To do this over the wire:
 # 1) to_json() to serialize
 # 2) json.loads() to deserialize
-# 3) and to_dict() to instantiate object again
+# 3) and from_dict() to instantiate object again
 >>> d = a.clone()
 
 >>> d.merge(b)
