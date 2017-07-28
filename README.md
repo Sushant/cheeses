@@ -8,6 +8,38 @@ Heavily inspired by [Meangirls](https://github.com/aphyr/meangirls)
 #### Sets
 All sets support `add, remove, merge, clone, to_dict, to_list, to_json` methods and a `from_dict` class method.
 
+Following examples use a hypothetical set up of 3 replicas which receive requests to add or remove an element and a cache layer that merges the results from all the replicas before returning a read response.
+
+```
+>>> import crdt
+# Replica A
+>>> a = crdt.TwoPhaseSet() # or crdt.LWWSet() or crdt.ORSet()
+# Replica B
+>>> b = crdt.TwoPhaseSet() # or crdt.LWWSet() or crdt.ORSet()
+# Replica C
+>>> c = crdt.TwoPhaseSet() # or crdt.LWWSet() or crdt.ORSet()
+
+>>> a.add('foo')
+>>> b.add('bar')
+>>> c.remove('foo') # TwoPhaseSet will raise an exception here
+
+# Cache layer that merges all replicas before returning the read response. 
+# To do this over the wire:
+# 1) to_json() to serialize
+# 2) json.loads() to deserialize
+# 3) and to_dict() to instantiate object again
+>>> d = a.clone()
+
+>>> d.merge(b)
+>>> d.merge(c)
+
+>>> d.to_list()
+
+# if d is TwoPhaseSet, to_list() will return ['foo', 'bar']
+#    d is LWWSet,      to_list() will return ['bar']
+# for ORSet,           to_list() will return ['foo', 'bar']
+```
+
 
 ### Running tests
 
