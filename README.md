@@ -34,10 +34,9 @@ Following examples use a hypothetical set up of 3 replicas which receive request
 >>> d.merge(c)
 
 >>> d.to_list()
-
-# if d is TwoPhaseSet, to_list() will return ['foo', 'bar']
-#    d is LWWSet,      to_list() will return ['bar']
-# for ORSet,           to_list() will return ['foo', 'bar']
+['foo', 'bar'] # if d is TwoPhaseSet
+['bar']        # if d is LWWSet
+['foo', 'bar'] # if d is ORSet
 ```
 
 
@@ -53,7 +52,7 @@ $ python -m unittest discover -s tests -p '*_test.py'
 - [Readings in conflict-free replicated data types](http://christophermeiklejohn.com/crdt/2014/07/22/readings-in-crdts.html) should cover pretty much everything else in terms of theory.
 - If you prefer watching talks like me:
   - [Consistency without consensus in production systems](https://www.youtube.com/watch?v=em9zLzM8O7c) by Peter Bourgon is the talk that got me excited about CRDTs because of their practical applications.
-  - [CRDTs Illustrated](https://www.youtube.com/watch?v=9xFfOhasiOE) by Arnout Engelen is also acts as a good companion to the paper.
+  - [CRDTs Illustrated](https://www.youtube.com/watch?v=9xFfOhasiOE) by Arnout Engelen also acts as a good companion to the paper.
   - In [Practical Demystification of CRDT](https://www.youtube.com/watch?v=PQzNW8uQ_Y4), Dmitry Ivanov & Nami Naserazad discuss pros & cons of a few of the CRDTs and some practical implementation issues.
 - Other CRDT projects:
   - [Meangirls](https://github.com/aphyr/meangirls) in Ruby
