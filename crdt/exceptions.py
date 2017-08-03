@@ -12,3 +12,6 @@ class ORSetException(CheesesException):
 
 class GCounterException(CheesesException):
     pass
+
+class PNCounterException(CheesesException):
+    pass
