@@ -1,4 +1,3 @@
-import uuid
 from big_cheese import BigCheese
 from collections import defaultdict
 from .exceptions import GCounterException
@@ -14,7 +13,7 @@ class GCounter(BigCheese):
             obj.e = counter_dict['e']
         return obj
 
-    def increment(self, delta, node=None):
+    def increment(self, delta=1, node=None):
         if delta < 0:
             raise GCounterException('Attempted to decrement g-counter value.')
         if not node:
@@ -22,7 +21,7 @@ class GCounter(BigCheese):
         self.e[node] += int(delta)
 
     def value(self):
-        return sum(v for v in self.e.itervalues())
+        return sum(self.e.itervalues())
 
     def merge(self, other):
         if not isinstance(other, self.__class__):
